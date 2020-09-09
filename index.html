@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://js.cx/libs/animate.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TeamDrona Logo Animation</title>
+
+<style>
+ #field {
+  height: 600px;
+  position: relative;
+ }
+
+ #ball {
+ position: absolute;
+ cursor: pointer;
+ }
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial;
+  font-size: 17px;
+}
+
+#myVideo {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  min-width: 100%; 
+  min-height: 100%;
+}
+
+.content {
+  position: fixed;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0);
+  color: #f1f1f1;
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+}
+
+#myBtn {
+  width: 200px;
+  font-size: 18px;
+  padding: 10px;
+  border: none;
+  background: #000;
+  color: #fff;
+  cursor: pointer;
+}
+
+#myBtn:hover {
+  background: #ddd;
+  color: black;
+}
+</style>
+</head>
+<body>
+
+<video autoplay muted loop id="myVideo">
+  <source src="Fire.mp4" type="video/mp4">
+  Your browser does not support HTML5 video.
+</video>
+
+<div class="content">
+  <h1>TeamDrona Logo Animation</h1>
+  <button id="myBtn" onclick="myFunction()">Pause</button>
+ <div id="field">
+    <img src="C:\Users\ISHAN\Desktop\Animation\White.png" width="400" height="`160" id="ball">
+  </div>
+</div>
+
+<script>
+ function makeEaseOut(timing) {
+      return function(timeFraction) {
+        return 1 - timing(1 - timeFraction);
+      }
+    }
+
+    function bounce(timeFraction) {
+      for (let a = 0, b = 1, result; 1; a += b, b /= 2) {
+        if (timeFraction >= (7 - 4 * a) / 11) {
+          return -Math.pow((11 - 6 * a - 11 * timeFraction) / 4, 2) + Math.pow(b, 2)
+        }
+      }
+    }
+
+    function quad(timeFraction) {
+      return Math.pow(timeFraction, 2);
+    }
+
+    ball.onclick = function() {
+
+      let height = field.clientHeight - ball.clientHeight;
+      let width = 600;
+
+      animate({
+        duration: 4000,
+        timing: makeEaseOut(bounce),
+        draw: function(progress) {
+          ball.style.top = height * progress + 'px'
+        }
+      });
+
+      animate({
+        duration: 2000,
+        timing: makeEaseOut(quad),
+        draw: function(progress) {
+          ball.style.left = width * progress + "px"
+        }
+      });
+    }
+var video = document.getElementById("myVideo");
+var btn = document.getElementById("myBtn");
+
+function myFunction() {
+  if (video.paused) {
+    video.play();
+    btn.innerHTML = "Pause";
+  } else {
+    video.pause();
+    btn.innerHTML = "Play";
+  }
+}
+</script>
+
+</body>
+</html>
